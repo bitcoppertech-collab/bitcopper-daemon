@@ -61,13 +61,43 @@ var (
 	isMining      bool
 )
 
+
+// doHandshake registra el nodo en Railway al arrancar
+func doHandshake(wallet, deviceID string) {
+	type HandshakeReq struct {
+		Wallet   string  `json:"wallet"`
+		DeviceID string  `json:"device_id"`
+		Platform string  `json:"platform"`
+		Temp     float64 `json:"temp"`
+		Version  string  `json:"version"`
+	}
+	req := HandshakeReq{
+		Wallet:   wallet,
+		DeviceID: deviceID,
+		Platform: runtime.GOOS + "-" + runtime.GOARCH,
+		Temp:     getTemperature(),
+		Version:  VERSION,
+	}
+	body, _ := json.Marshal(req)
+	resp, err := http.Post(RAILWAY_API+"/api/handshake", "application/json", bytes.NewReader(body))
+	if err != nil {
+		log.Printf("Handshake error: %v", err)
+		return
+	}
+	defer resp.Body.Close()
+	fmt.Println("✓ Handshake OK — nodo registrado en la red Bitcopper")
+}
+
 func main() {
 	fmt.Printf("BITCOPPER DAEMON v%s\n", VERSION)
 	fmt.Printf("Proof of Heat Protocol - In cuprum veritas.\n\n")
 	wallet = loadOrCreateWallet()
 	deviceID = getDeviceID()
 	fmt.Printf("Wallet:    %s\n", wallet)
-	fmt.Printf("Device ID: %s\n\n", deviceID[:40]+"...")
+	devPreview := deviceID
+	if len(devPreview) > 40 { devPreview = devPreview[:40] }
+	fmt.Printf("Device ID: %s\n\n", devPreview+"...")
+	doHandshake(wallet, deviceID)
 	go startLocalServer()
 	isMining = true
 	go miningLoop()
