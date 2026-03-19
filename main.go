@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand"
+	
 	"net/http"
 	"os"
 	"os/signal"
@@ -91,17 +91,8 @@ func doHandshake(wallet, deviceID string) {
 func main() {
 	fmt.Printf("BITCOPPER DAEMON v%s\n", VERSION)
 	fmt.Printf("Proof of Heat Protocol - In cuprum veritas.\n\n")
-	if w := os.Getenv("BITCOPPER_WALLET"); w != "" {
-		wallet = w
-		fmt.Println("✓ Identidad del sentinel cargada")
-	} else {
-		wallet = loadOrCreateWallet()
-	}
-	if d := os.Getenv("BITCOPPER_DEVICE_ID"); d != "" {
-		deviceID = d
-	} else {
-		deviceID = getDeviceID()
-	}
+	wallet = loadOrCreateWallet()
+	deviceID = getDeviceID()
 	fmt.Printf("Wallet:    %s\n", wallet)
 	devPreview := deviceID
 	if len(devPreview) > 40 { devPreview = devPreview[:40] }
@@ -189,10 +180,11 @@ func loadOrCreateWallet() string {
 	if err == nil && len(data) > 10 {
 		return string(data)
 	}
-	seed := fmt.Sprintf("%d-%d-%s", time.Now().UnixNano(), rand.Int63(), runtime.GOOS)
+	hostname, _ := os.Hostname()
+	seed := fmt.Sprintf("bitcopper-wallet|%s|%s|%s|%d", hostname, runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
 	hash := sha256.Sum256([]byte(seed))
 	w := fmt.Sprintf("BTCU-%x", hash)
-	os.WriteFile(cfgFile, []byte(w), 0600)
+	_ = os.WriteFile(cfgFile, []byte(w), 0600)
 	fmt.Println("Nueva wallet generada y sellada.")
 	return w
 }
@@ -205,13 +197,6 @@ func getDeviceID() string {
 	if err == nil && len(data) > 10 {
 		return string(data)
 	}
-	hostname, _ := os.Hostname()
-	seed := fmt.Sprintf("%s|%s|%s|%d", hostname, runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
-	hash := sha256.Sum256([]byte(seed))
-	d := fmt.Sprintf("CU-%x", hash)
-	os.WriteFile(cfgFile, []byte(d), 0600)
-	return d
-}
 	hostname, _ := os.Hostname()
 	seed := fmt.Sprintf("%s|%s|%s|%d", hostname, runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
 	hash := sha256.Sum256([]byte(seed))
