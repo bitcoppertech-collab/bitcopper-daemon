@@ -1,15 +1,12 @@
 package main
 
 import (
-        "crypto/tls"
 	"bytes"
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"log"
 	
-	"context"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -20,7 +17,6 @@ import (
 
 const (
 	RAILWAY_API   = "https://bitcu-server-production.up.railway.app"
-	RAILWAY_IP    = "https://bitcu-server-production.up.railway.app"
 	LOCAL_PORT    = "8765"
 	VERSION       = "1.0.0"
 	MINE_INTERVAL = 5 * time.Second
@@ -65,69 +61,13 @@ var (
 	isMining      bool
 )
 
-
-// doHandshake registra el nodo en Railway al arrancar
-var httpClient = &http.Client{
-        Transport: &http.Transport{
-                TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-        },
-}
-
-func resolveAPI() string {
-	if os.Getenv("BITCOPPER_USE_IP") == "1" {
-		return RAILWAY_IP
-	}
-	return RAILWAY_API
-}
-
-func doHandshake(wallet, deviceID string) {
-	type HandshakeReq struct {
-		Wallet   string  `json:"wallet"`
-		DeviceID string  `json:"device_id"`
-		Platform string  `json:"platform"`
-		Temp     float64 `json:"temp"`
-		Version  string  `json:"version"`
-	}
-	req := HandshakeReq{
-		Wallet:   wallet,
-		DeviceID: deviceID,
-		Platform: getPlatform(),
-		Temp:     getTemperature(),
-		Version:  VERSION,
-	}
-	body, _ := json.Marshal(req)
-	resp, err := httpClient.Post(resolveAPI()+"/api/handshake", "application/json", bytes.NewReader(body))
-	if err != nil {
-		log.Printf("Handshake error: %v", err)
-		return
-	}
-	defer resp.Body.Close()
-	fmt.Println("✓ Handshake OK — nodo registrado en la red Bitcopper")
-}
-
-func init() {
-	// Forzar DNS resolver propio en Android (evita [::1]:53)
-	if os.Getenv("BITCOPPER_USE_IP") == "1" {
-		net.DefaultResolver = &net.Resolver{
-			PreferGo: true,
-			Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
-				d := net.Dialer{}
-				return d.DialContext(ctx, "udp", "8.8.8.8:53")
-			},
-		}
-	}
-}
-
 func main() {
 	fmt.Printf("BITCOPPER DAEMON v%s\n", VERSION)
 	fmt.Printf("Proof of Heat Protocol - In cuprum veritas.\n\n")
 	wallet = loadOrCreateWallet()
 	deviceID = getDeviceID()
 	fmt.Printf("Wallet:    %s\n", wallet)
-	devPreview := deviceID
-	if len(devPreview) > 40 { devPreview = devPreview[:40] }
-	fmt.Printf("Device ID: %s\n\n", devPreview+"...")
-	doHandshake(wallet, deviceID)
+	fmt.Printf("Device ID: %s\n\n", deviceID[:40]+"...")
 	go startLocalServer()
 	isMining = true
 	go miningLoop()
@@ -155,7 +95,7 @@ func miningLoop() {
 			Timestamp: time.Now().UnixMilli(),
 		}
 		body, _ := json.Marshal(req)
-		resp, err := httpClient.Post(resolveAPI()+"/api/mine", "application/json", bytes.NewReader(body))
+		resp, err := http.Post(RAILWAY_API+"/api/mine", "application/json", bytes.NewReader(body))
 		if err != nil {
 			log.Printf("Error minando: %v", err)
 		} else {
@@ -167,11 +107,30 @@ func miningLoop() {
 				reward := 0.0
 				fmt.Sscanf(mr.Reward, "%f", &reward)
 				sessionBITCU += reward
+				go notifyTAL("block_mined", mr.Block, mr.Reward)
 				fmt.Printf("Bloque #%d | %.10f BITCU | Temp: %.1fC | CPU: %.1f%%\n", mr.Block, reward, temp, cpu)
 			}
 		}
 		time.Sleep(MINE_INTERVAL)
 	}
+}
+
+
+// TAL Hook — notifica al agente TAL
+func notifyTAL(eventType string, block int, reward string) {
+	talURL := RAILWAY_API + "/api/tal/hook"
+	type TALEvent struct {
+		EventType string  `json:"event_type"`
+		Wallet    string  `json:"wallet"`
+		DeviceID  string  `json:"device_id"`
+		Temp      float64 `json:"temp"`
+		Block     int     `json:"block,omitempty"`
+		Reward    string  `json:"reward,omitempty"`
+		Timestamp int64   `json:"timestamp"`
+	}
+	event := TALEvent{eventType, wallet, deviceID, lastTemp, block, reward, time.Now().UnixMilli()}
+	body, _ := json.Marshal(event)
+	http.Post(talURL, "application/json", bytes.NewReader(body))
 }
 
 func startLocalServer() {
@@ -195,22 +154,8 @@ func startLocalServer() {
 	log.Fatal(http.ListenAndServe(":"+LOCAL_PORT, mux))
 }
 
-func getCfgDir() string {
-	if runtime.GOOS == "android" {
-		return "/sdcard/.bitcopper"
-	}
-	return os.ExpandEnv("$HOME/.bitcopper")
-}
-
 func loadOrCreateWallet() string {
-	// Prioridad 1: variable de entorno del sentinel
-	if envWallet := os.Getenv("BITCOPPER_WALLET"); envWallet != "" {
-		cfgDir := getCfgDir()
-		os.MkdirAll(cfgDir, 0700)
-		_ = os.WriteFile(cfgDir+"/wallet", []byte(envWallet), 0600)
-		return envWallet
-	}
-	cfgDir := getCfgDir()
+	cfgDir := os.ExpandEnv("$HOME/.bitcopper")
 	cfgFile := cfgDir + "/wallet"
 	os.MkdirAll(cfgDir, 0700)
 	data, err := os.ReadFile(cfgFile)
@@ -221,21 +166,14 @@ func loadOrCreateWallet() string {
 	seed := fmt.Sprintf("bitcopper-wallet|%s|%s|%s|%d", hostname, runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
 	hash := sha256.Sum256([]byte(seed))
 	w := fmt.Sprintf("BTCU-%x", hash)
-	_ = os.WriteFile(cfgFile, []byte(w), 0600)
+	os.WriteFile(cfgFile, []byte(w), 0600)
 	fmt.Println("Nueva wallet generada y sellada.")
 	return w
 }
 
 func getDeviceID() string {
-	if envID := os.Getenv("BITCOPPER_DEVICE_ID"); envID != "" {
-		cfgDir := getCfgDir()
-		os.MkdirAll(cfgDir, 0700)
-		_ = os.WriteFile(cfgDir+"/device_id", []byte(envID), 0600)
-		return envID
-	}
-	cfgDir := getCfgDir()
+	cfgDir := os.ExpandEnv("$HOME/.bitcopper")
 	cfgFile := cfgDir + "/device_id"
-	os.MkdirAll(cfgDir, 0700)
 	data, err := os.ReadFile(cfgFile)
 	if err == nil && len(data) > 10 {
 		return string(data)
@@ -246,20 +184,4 @@ func getDeviceID() string {
 	d := fmt.Sprintf("CU-%x", hash)
 	os.WriteFile(cfgFile, []byte(d), 0600)
 	return d
-}
-
-func getPlatform() string {
-	if p := os.Getenv("BITCOPPER_PLATFORM"); p != "" {
-		return p
-	}
-	switch runtime.GOOS {
-	case "darwin":
-		return "macos"
-	case "windows":
-		return "windows"
-	case "android":
-		return "android"
-	default:
-		return runtime.GOOS + "-" + runtime.GOARCH
-	}
 }
