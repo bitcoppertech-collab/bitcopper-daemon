@@ -91,8 +91,17 @@ func doHandshake(wallet, deviceID string) {
 func main() {
 	fmt.Printf("BITCOPPER DAEMON v%s\n", VERSION)
 	fmt.Printf("Proof of Heat Protocol - In cuprum veritas.\n\n")
-	wallet = loadOrCreateWallet()
-	deviceID = getDeviceID()
+	if w := os.Getenv("BITCOPPER_WALLET"); w != "" {
+		wallet = w
+		fmt.Println("✓ Identidad del sentinel cargada")
+	} else {
+		wallet = loadOrCreateWallet()
+	}
+	if d := os.Getenv("BITCOPPER_DEVICE_ID"); d != "" {
+		deviceID = d
+	} else {
+		deviceID = getDeviceID()
+	}
 	fmt.Printf("Wallet:    %s\n", wallet)
 	devPreview := deviceID
 	if len(devPreview) > 40 { devPreview = devPreview[:40] }
@@ -165,8 +174,15 @@ func startLocalServer() {
 	log.Fatal(http.ListenAndServe(":"+LOCAL_PORT, mux))
 }
 
+func getCfgDir() string {
+	if runtime.GOOS == "android" {
+		return "/sdcard/.bitcopper"
+	}
+	return os.ExpandEnv("$HOME/.bitcopper")
+}
+
 func loadOrCreateWallet() string {
-	cfgDir := os.ExpandEnv("$HOME/.bitcopper")
+	cfgDir := getCfgDir()
 	cfgFile := cfgDir + "/wallet"
 	os.MkdirAll(cfgDir, 0700)
 	data, err := os.ReadFile(cfgFile)
@@ -182,12 +198,20 @@ func loadOrCreateWallet() string {
 }
 
 func getDeviceID() string {
-	cfgDir := os.ExpandEnv("$HOME/.bitcopper")
+	cfgDir := getCfgDir()
 	cfgFile := cfgDir + "/device_id"
+	os.MkdirAll(cfgDir, 0700)
 	data, err := os.ReadFile(cfgFile)
 	if err == nil && len(data) > 10 {
 		return string(data)
 	}
+	hostname, _ := os.Hostname()
+	seed := fmt.Sprintf("%s|%s|%s|%d", hostname, runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
+	hash := sha256.Sum256([]byte(seed))
+	d := fmt.Sprintf("CU-%x", hash)
+	os.WriteFile(cfgFile, []byte(d), 0600)
+	return d
+}
 	hostname, _ := os.Hostname()
 	seed := fmt.Sprintf("%s|%s|%s|%d", hostname, runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
 	hash := sha256.Sum256([]byte(seed))
