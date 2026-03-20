@@ -2,11 +2,15 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
+	"crypto/tls"
 	"encoding/json"
+	"io"
 	"fmt"
 	"log"
 	"math/rand"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -17,7 +21,7 @@ import (
 
 const (
 	RAILWAY_API   = "https://bitcu-server-production.up.railway.app"
-	LOCAL_PORT    = "8765"
+	RAILWAY_HOST  = "bitcu-server-production.up.railway.app"
 	VERSION       = "1.0.0"
 	MINE_INTERVAL = 5 * time.Second
 )
@@ -39,18 +43,6 @@ type MineResponse struct {
 	Reward string `json:"reward"`
 }
 
-type StatusResponse struct {
-	Version    string  `json:"version"`
-	Wallet     string  `json:"wallet"`
-	DeviceID   string  `json:"device_id"`
-	OS         string  `json:"os"`
-	Temp       float64 `json:"temp"`
-	CPU        float64 `json:"cpu"`
-	Mining     bool    `json:"mining"`
-	Blocks     int     `json:"blocks_this_session"`
-	TotalBITCU float64 `json:"bitcu_this_session"`
-}
-
 var (
 	wallet        string
 	deviceID      string
@@ -59,10 +51,37 @@ var (
 	lastTemp      float64
 	lastCPU       float64
 	isMining      bool
+	httpClient    *http.Client
 )
 
+func newHTTPClient() *http.Client {
+	transport := &http.Transport{
+		DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
+			d := &net.Dialer{Timeout: 15 * time.Second}
+			// Resolver DNS via 8.8.8.8
+			host, port, _ := net.SplitHostPort(addr)
+			if port == "" { port = "443" }
+			addrs, err := (&net.Resolver{
+				PreferGo: true,
+				Dial: func(ctx2 context.Context, network2, address string) (net.Conn, error) {
+					return net.Dial("udp", "8.8.8.8:53")
+				},
+			}).LookupHost(ctx, host)
+			if err != nil || len(addrs) == 0 {
+				return d.DialContext(ctx, network, addr)
+			}
+			return d.DialContext(ctx, network, addrs[0]+":"+port)
+		},
+		TLSClientConfig: &tls.Config{
+			ServerName:         RAILWAY_HOST,
+			InsecureSkipVerify: true,
+		},
+		TLSHandshakeTimeout:   10 * time.Second,
+		ResponseHeaderTimeout: 15 * time.Second,
+	}
+	return &http.Client{Transport: transport, Timeout: 20 * time.Second}
+}
 
-// doHandshake registra el nodo en Railway al arrancar
 func doHandshake(wallet, deviceID string) {
 	type HandshakeReq struct {
 		Wallet   string  `json:"wallet"`
@@ -74,31 +93,33 @@ func doHandshake(wallet, deviceID string) {
 	req := HandshakeReq{
 		Wallet:   wallet,
 		DeviceID: deviceID,
-		Platform: runtime.GOOS + "-" + runtime.GOARCH,
+		Platform: "android_tv",
 		Temp:     getTemperature(),
 		Version:  VERSION,
 	}
 	body, _ := json.Marshal(req)
-	resp, err := http.Post(RAILWAY_API+"/api/handshake", "application/json", bytes.NewReader(body))
+	resp, err := httpClient.Post(RAILWAY_API+"/api/handshake", "application/json", bytes.NewReader(body))
 	if err != nil {
 		log.Printf("Handshake error: %v", err)
 		return
 	}
 	defer resp.Body.Close()
-	fmt.Println("✓ Handshake OK — nodo registrado en la red Bitcopper")
+	fmt.Println("Handshake OK")
 }
 
 func main() {
 	fmt.Printf("BITCOPPER DAEMON v%s\n", VERSION)
 	fmt.Printf("Proof of Heat Protocol - In cuprum veritas.\n\n")
+	httpClient = newHTTPClient()
 	wallet = loadOrCreateWallet()
 	deviceID = getDeviceID()
 	fmt.Printf("Wallet:    %s\n", wallet)
 	devPreview := deviceID
-	if len(devPreview) > 40 { devPreview = devPreview[:40] }
+	if len(devPreview) > 40 {
+		devPreview = devPreview[:40]
+	}
 	fmt.Printf("Device ID: %s\n\n", devPreview+"...")
 	doHandshake(wallet, deviceID)
-	go startLocalServer()
 	isMining = true
 	go miningLoop()
 	sig := make(chan os.Signal, 1)
@@ -125,44 +146,27 @@ func miningLoop() {
 			Timestamp: time.Now().UnixMilli(),
 		}
 		body, _ := json.Marshal(req)
-		resp, err := http.Post(RAILWAY_API+"/api/mine", "application/json", bytes.NewReader(body))
+		fmt.Printf("Enviando bloque...\n")
+		resp, err := httpClient.Post(RAILWAY_API+"/api/mine", "application/json", bytes.NewReader(body))
 		if err != nil {
 			log.Printf("Error minando: %v", err)
 		} else {
-			var mr MineResponse
-			json.NewDecoder(resp.Body).Decode(&mr)
+				body2, _ := io.ReadAll(resp.Body)
 			resp.Body.Close()
+			log.Printf("Respuesta raw: %s", string(body2))
+			var mr MineResponse
+			json.Unmarshal(body2, &mr)
+			log.Printf("Respuesta: ok=%v block=%d reward=%s", mr.OK, mr.Block, mr.Reward)
 			if mr.OK {
 				sessionBlocks++
 				reward := 0.0
 				fmt.Sscanf(mr.Reward, "%f", &reward)
 				sessionBITCU += reward
-				fmt.Printf("Bloque #%d | %.10f BITCU | Temp: %.1fC | CPU: %.1f%%\n", mr.Block, reward, temp, cpu)
+				fmt.Printf("Bloque #%d | %.10f BITCU\n", mr.Block, reward)
 			}
 		}
 		time.Sleep(MINE_INTERVAL)
 	}
-}
-
-func startLocalServer() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(map[string]string{"service": "bitcopper-daemon", "version": VERSION, "status": "running"})
-	})
-	mux.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(StatusResponse{Version: VERSION, Wallet: wallet, DeviceID: deviceID, OS: runtime.GOOS + "/" + runtime.GOARCH, Temp: lastTemp, CPU: lastCPU, Mining: isMining, Blocks: sessionBlocks, TotalBITCU: sessionBITCU})
-	})
-	mux.HandleFunc("/wallet", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(map[string]string{"wallet": wallet, "device_id": deviceID})
-	})
-	fmt.Printf("API local en http://localhost:%s\n\n", LOCAL_PORT)
-	log.Fatal(http.ListenAndServe(":"+LOCAL_PORT, mux))
 }
 
 func getCfgDir() string {
