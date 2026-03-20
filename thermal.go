@@ -10,18 +10,16 @@ import (
 )
 
 func getTemperature() float64 {
-    switch runtime.GOOS {
-    case "darwin":
-        return getMacTemp()
-    case "linux":
-        return getLinuxTemp()
-    case "windows":
-        return getWindowsTemp()
-    case "android":
-        return getAndroidTemp()
-    default:
-        return estimateTemp()
-    }
+	switch runtime.GOOS {
+	case "darwin":
+		return getMacTemp()
+	case "linux":
+		return getLinuxTemp()
+	case "windows":
+		return getWindowsTemp()
+	default:
+		return estimateTemp()
+	}
 }
 
 func getMacTemp() float64 {
@@ -102,13 +100,4 @@ func getCPULoad() float64 {
 		load = 100
 	}
 	return load
-}
-func getAndroidTemp() float64 {
-    out, err := exec.Command("cat", "/sys/class/thermal/thermal_zone0/temp").Output()
-    if err == nil {
-        if t, err := strconv.ParseFloat(strings.TrimSpace(string(out)), 64); err == nil {
-            return t / 1000.0
-        }
-    }
-    return estimateTemp()
 }

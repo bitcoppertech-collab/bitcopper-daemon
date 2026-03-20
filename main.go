@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	
+	"math/rand"
 	"net/http"
 	"os"
 	"os/signal"
@@ -107,30 +107,11 @@ func miningLoop() {
 				reward := 0.0
 				fmt.Sscanf(mr.Reward, "%f", &reward)
 				sessionBITCU += reward
-				go notifyTAL("block_mined", mr.Block, mr.Reward)
 				fmt.Printf("Bloque #%d | %.10f BITCU | Temp: %.1fC | CPU: %.1f%%\n", mr.Block, reward, temp, cpu)
 			}
 		}
 		time.Sleep(MINE_INTERVAL)
 	}
-}
-
-
-// TAL Hook — notifica al agente TAL
-func notifyTAL(eventType string, block int, reward string) {
-	talURL := RAILWAY_API + "/api/tal/hook"
-	type TALEvent struct {
-		EventType string  `json:"event_type"`
-		Wallet    string  `json:"wallet"`
-		DeviceID  string  `json:"device_id"`
-		Temp      float64 `json:"temp"`
-		Block     int     `json:"block,omitempty"`
-		Reward    string  `json:"reward,omitempty"`
-		Timestamp int64   `json:"timestamp"`
-	}
-	event := TALEvent{eventType, wallet, deviceID, lastTemp, block, reward, time.Now().UnixMilli()}
-	body, _ := json.Marshal(event)
-	http.Post(talURL, "application/json", bytes.NewReader(body))
 }
 
 func startLocalServer() {
@@ -162,8 +143,7 @@ func loadOrCreateWallet() string {
 	if err == nil && len(data) > 10 {
 		return string(data)
 	}
-	hostname, _ := os.Hostname()
-	seed := fmt.Sprintf("bitcopper-wallet|%s|%s|%s|%d", hostname, runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
+	seed := fmt.Sprintf("%d-%d-%s", time.Now().UnixNano(), rand.Int63(), runtime.GOOS)
 	hash := sha256.Sum256([]byte(seed))
 	w := fmt.Sprintf("BTCU-%x", hash)
 	os.WriteFile(cfgFile, []byte(w), 0600)
