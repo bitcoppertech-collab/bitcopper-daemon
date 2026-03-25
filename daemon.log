@@ -8603,3 +8603,176 @@ Enviando bloque...
 2026/03/25 15:39:46 Respuesta raw: {"ok":true,"block":918261,"hash":"6e1e9dc4a4e9f03dde00ebee50e112d275cdef84ba90a97e854bf697325e5a53","reward":"0.0009428162","temp":37.53663630298529,"cpu":6.426685}
 2026/03/25 15:39:46 Respuesta: ok=true block=918261 reward=0.0009428162
 Bloque #918261 | 0.0009428162 BITCU
+Enviando bloque...
+2026/03/25 15:39:51 Respuesta raw: {"ok":true,"block":918270,"hash":"3ddf8c0ffb4ad4425365e47d8d459ffbf0a2e804406e5322253318350fe9f7cc","reward":"0.0009054314","temp":37.21164864994332,"cpu":6.35965}
+2026/03/25 15:39:51 Respuesta: ok=true block=918270 reward=0.0009054314
+Bloque #918270 | 0.0009054314 BITCU
+Enviando bloque...
+2026/03/25 15:39:57 Respuesta raw: {"ok":true,"block":918279,"hash":"2fa06ab2b099567cdb423426e4d22758135a098a1f2c541b18452d51067b524a","reward":"0.0009249604","temp":37.380185640743015,"cpu":6.548096}
+2026/03/25 15:39:57 Respuesta: ok=true block=918279 reward=0.0009249604
+Bloque #918279 | 0.0009249604 BITCU
+Enviando bloque...
+2026/03/25 15:40:02 Respuesta raw: {"ok":true,"block":918290,"hash":"56c3b340da07bcfbe91f129c867ab31f2ebd04c089a2624ad414cace62a0622b","reward":"0.0009862275","temp":37.91318214857552,"cpu":6.506739}
+2026/03/25 15:40:02 Respuesta: ok=true block=918290 reward=0.0009862275
+Bloque #918290 | 0.0009862275 BITCU
+Enviando bloque...
+2026/03/25 15:40:08 Respuesta raw: {"ok":true,"block":918296,"hash":"51d6e2ff9d30aa6a867f7cc48f2d06c78948c6a85b08df62c1594e72937354ea","reward":"0.0011128201","temp":39.0082387581393,"cpu":6.421103}
+2026/03/25 15:40:08 Respuesta: ok=true block=918296 reward=0.0011128201
+Bloque #918296 | 0.0011128201 BITCU
+Enviando bloque...
+2026/03/25 15:40:13 Respuesta raw: {"ok":true,"block":918305,"hash":"ce1e05645913f3e23473d55b1758f3d4474930fc21a37db538eb877e7ee440e9","reward":"0.0011282837","temp":39.15142625935411,"cpu":5.298497}
+2026/03/25 15:40:13 Respuesta: ok=true block=918305 reward=0.0011282837
+Bloque #918305 | 0.0011282837 BITCU
+Enviando bloque...
+2026/03/25 15:40:18 Respuesta raw: {"ok":true,"block":918314,"hash":"193648b7ad9f41b4fff33e8a4bd758f498ee0a27255faa319bfc8cbe1a988ad0","reward":"0.0008433350","temp":36.66703151858191,"cpu":6.662429}
+2026/03/25 15:40:18 Respuesta: ok=true block=918314 reward=0.0008433350
+Bloque #918314 | 0.0008433350 BITCU
+Enviando bloque...
+2026/03/25 15:40:24 Respuesta raw: {"ok":true,"block":918323,"hash":"e5db7ec1ac4d16f984e284a9892758d51c1273adb78c777ad9294f3917c2f7cf","reward":"0.0010300106","temp":38.292965388949085,"cpu":6.461962}
+2026/03/25 15:40:24 Respuesta: ok=true block=918323 reward=0.0010300106
+Bloque #918323 | 0.0010300106 BITCU
+Enviando bloque...
+2026/03/25 15:40:29 Respuesta raw: {"ok":true,"block":918332,"hash":"17251a0a02a3c902f2e7847122194f007418109fac1674a322c00053d810168f","reward":"0.0007992000","temp":36.27998313274974,"cpu":6.657322}
+2026/03/25 15:40:29 Respuesta: ok=true block=918332 reward=0.0007992000
+Bloque #918332 | 0.0007992000 BITCU
+Enviando bloque...
+2026/03/25 15:40:34 Respuesta raw: {"ok":true,"block":918342,"hash":"27c653047bac542ff68494ae36276a6d71960a97d401edaa8a12a34150507b58","reward":"0.0010192692","temp":38.19797119618665,"cpu":6.700647}
+2026/03/25 15:40:34 Respuesta: ok=true block=918342 reward=0.0010192692
+Bloque #918342 | 0.0010192692 BITCU
+Enviando bloque...
+2026/03/25 15:40:40 Respuesta raw: {"ok":true,"block":918352,"hash":"30c47231ecee465b689752883d8b629c8941acac509f002372d76bbb4b803de8","reward":"0.0009604809","temp":37.68859404602995,"cpu":6.651928}
+2026/03/25 15:40:40 Respuesta: ok=true block=918352 reward=0.0009604809
+Bloque #918352 | 0.0009604809 BITCU
+Enviando bloque...
+2026/03/25 15:40:45 Respuesta raw: {"ok":true,"block":918360,"hash":"db7264ac8affd4e09a728209b8ac34e08460b67ebaf583cbcfbdc2bd68938895","reward":"0.0009875190","temp":37.92483023187137,"cpu":6.492057}
+2026/03/25 15:40:45 Respuesta: ok=true block=918360 reward=0.0009875190
+Bloque #918360 | 0.0009875190 BITCU
+Enviando bloque...
+2026/03/25 15:40:51 Respuesta raw: {"ok":true,"block":918370,"hash":"7cbb40a7e5b677c98319154354cfb05003581328f231319952fa10c804a72c95","reward":"0.0009603053","temp":37.6899118305563,"cpu":6.274046}
+2026/03/25 15:40:51 Respuesta: ok=true block=918370 reward=0.0009603053
+Bloque #918370 | 0.0009603053 BITCU
+Enviando bloque...
+2026/03/25 15:40:56 Respuesta raw: {"ok":true,"block":918379,"hash":"d5051a4f2f7ebe867ab1fc59a1e375fbdca43dde5e6ec51d9a1ef253091a2d5e","reward":"0.0008371534","temp":36.61540092160728,"cpu":6.250804}
+2026/03/25 15:40:56 Respuesta: ok=true block=918379 reward=0.0008371534
+Bloque #918379 | 0.0008371534 BITCU
+Enviando bloque...
+2026/03/25 15:41:02 Respuesta raw: {"ok":true,"block":918387,"hash":"1320d4095a965dc76d97c3a6a0dcff3d601cd5df80d07dd03b81fe78609dfdce","reward":"0.0007997050","temp":36.288201146997324,"cpu":6.06784}
+2026/03/25 15:41:02 Respuesta: ok=true block=918387 reward=0.0007997050
+Bloque #918387 | 0.0007997050 BITCU
+Enviando bloque...
+2026/03/25 15:41:07 Respuesta raw: {"ok":true,"block":918398,"hash":"7a601ae5d31cfb013d466c440702cc6061e15ef888a6ae219936f09e2ca71baa","reward":"0.0008236277","temp":36.494125330690494,"cpu":6.684194}
+2026/03/25 15:41:07 Respuesta: ok=true block=918398 reward=0.0008236277
+Bloque #918398 | 0.0008236277 BITCU
+Enviando bloque...
+2026/03/25 15:41:12 Respuesta raw: {"ok":true,"block":918407,"hash":"1eaf9cfd91cb00ca75f96f846cd5f81d5db41f7d0d5fe374be12f3daf5c17c60","reward":"0.0011121752","temp":39.00112559121919,"cpu":6.575062}
+2026/03/25 15:41:12 Respuesta: ok=true block=918407 reward=0.0011121752
+Bloque #918407 | 0.0011121752 BITCU
+Enviando bloque...
+2026/03/25 15:41:18 Respuesta raw: {"ok":true,"block":918416,"hash":"4d7368dc8c24133421740a81207700a4a80454138aaec7af46ae6d9fad62217f","reward":"0.0011403710","temp":39.24344811984603,"cpu":6.599784}
+2026/03/25 15:41:18 Respuesta: ok=true block=918416 reward=0.0011403710
+Bloque #918416 | 0.0011403710 BITCU
+Enviando bloque...
+2026/03/25 15:41:23 Respuesta raw: {"ok":true,"block":918423,"hash":"17add56f2d9deb6731904a4d26b6a40e44133828dfead74579acb2d4c9e04086","reward":"0.0010979943","temp":38.87946888451001,"cpu":6.572147}
+2026/03/25 15:41:23 Respuesta: ok=true block=918423 reward=0.0010979943
+Bloque #918423 | 0.0010979943 BITCU
+Enviando bloque...
+2026/03/25 15:41:29 Respuesta raw: {"ok":true,"block":918432,"hash":"fb007421daa25d6afa655d8a96793c2dfd280786752df08cb10610c654a6d399","reward":"0.0010690579","temp":38.629479576003185,"cpu":6.593598}
+2026/03/25 15:41:29 Respuesta: ok=true block=918432 reward=0.0010690579
+Bloque #918432 | 0.0010690579 BITCU
+Enviando bloque...
+2026/03/25 15:41:34 Respuesta raw: {"ok":true,"block":918439,"hash":"6ed79da6d0f6ff4dca8b2cf84022aa602806aeafbbd662c691961059dd1006ee","reward":"0.0011108848","temp":38.99246131932477,"cpu":6.316171}
+2026/03/25 15:41:34 Respuesta: ok=true block=918439 reward=0.0011108848
+Bloque #918439 | 0.0011108848 BITCU
+Enviando bloque...
+2026/03/25 15:41:39 Respuesta raw: {"ok":true,"block":918447,"hash":"a7e92ed9b8f176cf834282950ee118b9f582536f2cef9c0ed44755f66596abd5","reward":"0.0008220648","temp":36.48150214861211,"cpu":6.52253}
+2026/03/25 15:41:39 Respuesta: ok=true block=918447 reward=0.0008220648
+Bloque #918447 | 0.0008220648 BITCU
+Enviando bloque...
+2026/03/25 15:41:45 Respuesta raw: {"ok":true,"block":918456,"hash":"ba5f0f417f071a2e1b631a18ba2b3c258b4a84944df3a50bc6e1e303780fef3f","reward":"0.0010389893","temp":38.3693318816037,"cpu":6.627063}
+2026/03/25 15:41:45 Respuesta: ok=true block=918456 reward=0.0010389893
+Bloque #918456 | 0.0010389893 BITCU
+Enviando bloque...
+2026/03/25 15:41:50 Respuesta raw: {"ok":true,"block":918464,"hash":"51ad020db3602aac2f287f5b3698c3dd568bade71a73db66efc7df46fbd8b6b3","reward":"0.0011289461","temp":39.14586549455549,"cpu":6.55773}
+2026/03/25 15:41:50 Respuesta: ok=true block=918464 reward=0.0011289461
+Bloque #918464 | 0.0011289461 BITCU
+Enviando bloque...
+2026/03/25 15:41:56 Respuesta raw: {"ok":true,"block":918473,"hash":"b0da174065510825d6c97b5b88f0b485e505a16213ccd3a095828f87152ddad5","reward":"0.0009791913","temp":37.85055222367283,"cpu":6.705469}
+2026/03/25 15:41:56 Respuesta: ok=true block=918473 reward=0.0009791913
+Bloque #918473 | 0.0009791913 BITCU
+Enviando bloque...
+2026/03/25 15:42:01 Respuesta raw: {"ok":true,"block":918480,"hash":"316557f3e907c4e6d57b9241827e412fbc127d46929b4fc5f86b683bebf52f38","reward":"0.0010131305","temp":38.14570239677245,"cpu":6.618363}
+2026/03/25 15:42:01 Respuesta: ok=true block=918480 reward=0.0010131305
+Bloque #918480 | 0.0010131305 BITCU
+Enviando bloque...
+2026/03/25 15:42:06 Respuesta raw: {"ok":true,"block":918489,"hash":"b7969705f82ec4a70f5f99b21f084a76d9f3206007e3466379bd5bc4c14e264d","reward":"0.0009104852","temp":37.25354492775033,"cpu":6.656585}
+2026/03/25 15:42:06 Respuesta: ok=true block=918489 reward=0.0009104852
+Bloque #918489 | 0.0009104852 BITCU
+Enviando bloque...
+2026/03/25 15:42:12 Respuesta raw: {"ok":true,"block":918499,"hash":"f3166c4a29422b0c4159207342c7a35ae4ab9662b649f0f2164f0c22a84abd68","reward":"0.0008585362","temp":36.79966506509416,"cpu":6.705011}
+2026/03/25 15:42:12 Respuesta: ok=true block=918499 reward=0.0008585362
+Bloque #918499 | 0.0008585362 BITCU
+Enviando bloque...
+2026/03/25 15:42:17 Respuesta raw: {"ok":true,"block":918508,"hash":"ea69b3fe0722ef5683494ee2e33f2048df2dceabbd234389184693cf774c57b0","reward":"0.0008734685","temp":36.93004340840895,"cpu":6.704379}
+2026/03/25 15:42:17 Respuesta: ok=true block=918508 reward=0.0008734685
+Bloque #918508 | 0.0008734685 BITCU
+Enviando bloque...
+2026/03/25 15:42:23 Respuesta raw: {"ok":true,"block":918517,"hash":"2e1e5510f69ca9a0398e40b66461e6fe179f75adb2fd4dd88bb7a48affe8b2f1","reward":"0.0008642696","temp":36.850344569957116,"cpu":6.585425}
+2026/03/25 15:42:23 Respuesta: ok=true block=918517 reward=0.0008642696
+Bloque #918517 | 0.0008642696 BITCU
+Enviando bloque...
+2026/03/25 15:42:28 Respuesta raw: {"ok":true,"block":918526,"hash":"f3ea0b40bd832169723ee3df9157b6eca32fa659baf1419720966f0c6c59cbda","reward":"0.0009236836","temp":37.368069835936566,"cpu":6.698905}
+2026/03/25 15:42:28 Respuesta: ok=true block=918526 reward=0.0009236836
+Bloque #918526 | 0.0009236836 BITCU
+Enviando bloque...
+2026/03/25 15:42:33 Respuesta raw: {"ok":true,"block":918534,"hash":"87eb637360d8f1100242af15e96ed573b421fa05c2f96eca6091a66dc24f540a","reward":"0.0008757370","temp":36.94993393722523,"cpu":6.711115}
+2026/03/25 15:42:33 Respuesta: ok=true block=918534 reward=0.0008757370
+Bloque #918534 | 0.0008757370 BITCU
+Enviando bloque...
+2026/03/25 15:42:39 Respuesta raw: {"ok":true,"block":918541,"hash":"2c26538fa1ee3c801903a5e2071503042e1144115df55a8c51b2ab6308cdd772","reward":"0.0010161339","temp":38.17330374941911,"cpu":6.406873}
+2026/03/25 15:42:39 Respuesta: ok=true block=918541 reward=0.0010161339
+Bloque #918541 | 0.0010161339 BITCU
+Enviando bloque...
+2026/03/25 15:42:44 Respuesta raw: {"ok":true,"block":918549,"hash":"e497537eba11fd4ef08d4b674510bbd2d328c5e50ea129b0fe7459d679e87436","reward":"0.0010351270","temp":38.33558085238337,"cpu":6.657379}
+2026/03/25 15:42:44 Respuesta: ok=true block=918549 reward=0.0010351270
+Bloque #918549 | 0.0010351270 BITCU
+Enviando bloque...
+2026/03/25 15:42:50 Respuesta raw: {"ok":true,"block":918559,"hash":"eaf18f5ad4d0acbd5fe4ef799e986017fb68576c7373b065724cf0190836e36a","reward":"0.0010266844","temp":38.26318141313176,"cpu":6.588824}
+2026/03/25 15:42:50 Respuesta: ok=true block=918559 reward=0.0010266844
+Bloque #918559 | 0.0010266844 BITCU
+Enviando bloque...
+2026/03/25 15:42:55 Respuesta raw: {"ok":true,"block":918566,"hash":"2814c21496a43f2ca291a8e8a52bba15bc3d5ffdf3e7867b8443f1d5c16b1404","reward":"0.0009504552","temp":37.60219648671974,"cpu":6.566486}
+2026/03/25 15:42:55 Respuesta: ok=true block=918566 reward=0.0009504552
+Bloque #918566 | 0.0009504552 BITCU
+Enviando bloque...
+2026/03/25 15:43:00 Respuesta raw: {"ok":true,"block":918575,"hash":"31bbb661fb99b0d88e683d4e10a21670496bbe5ebf896e02e10084edf4040565","reward":"0.0009764153","temp":37.831881881439244,"cpu":6.031068}
+2026/03/25 15:43:00 Respuesta: ok=true block=918575 reward=0.0009764153
+Bloque #918575 | 0.0009764153 BITCU
+Enviando bloque...
+2026/03/25 15:43:06 Respuesta raw: {"ok":true,"block":918583,"hash":"4870ce27defb58acef68c65ca3164e143f091104a99aa82311113cea16a18c60","reward":"0.0009821570","temp":37.87891529298085,"cpu":6.40907}
+2026/03/25 15:43:06 Respuesta: ok=true block=918583 reward=0.0009821570
+Bloque #918583 | 0.0009821570 BITCU
+Enviando bloque...
+2026/03/25 15:43:11 Respuesta raw: {"ok":true,"block":918591,"hash":"d47a9bb346cbac3f12fb3c3e591be85650a645e60ff20644e862070fbf174974","reward":"0.0008582235","temp":36.82084386369721,"cpu":3.053426}
+2026/03/25 15:43:11 Respuesta: ok=true block=918591 reward=0.0008582235
+Bloque #918591 | 0.0008582235 BITCU
+Enviando bloque...
+2026/03/25 15:43:17 Respuesta raw: {"ok":true,"block":918600,"hash":"8af18eed808317dcf0b747f8e17e4d8218d824688be452d1ec87ae538f793ea4","reward":"0.0011341463","temp":39.18946559641713,"cpu":6.677782}
+2026/03/25 15:43:17 Respuesta: ok=true block=918600 reward=0.0011341463
+Bloque #918600 | 0.0011341463 BITCU
+Enviando bloque...
+2026/03/25 15:43:22 Respuesta raw: {"ok":true,"block":918611,"hash":"e10835336a2d6d5b05144fe188a0e75a915413a39a59d1ec83a963abbe4bc520","reward":"0.0010333754","temp":38.32163145603569,"cpu":6.512}
+2026/03/25 15:43:22 Respuesta: ok=true block=918611 reward=0.0010333754
+Bloque #918611 | 0.0010333754 BITCU
+Enviando bloque...
+2026/03/25 15:43:27 Respuesta raw: {"ok":true,"block":918620,"hash":"4f5072c1fede08f7b90f6e0dd6f4ab8ad254ea5f33e95bdc3840bef7a5694f1b","reward":"0.0010004301","temp":38.03579322643,"cpu":6.585676}
+2026/03/25 15:43:27 Respuesta: ok=true block=918620 reward=0.0010004301
+Bloque #918620 | 0.0010004301 BITCU
+Enviando bloque...
+2026/03/25 15:43:33 Respuesta raw: {"ok":true,"block":918627,"hash":"83ef0e11b5164310eeb8038caf082ef51f945ff9c33a84a70a7bd8947fa7c733","reward":"0.0011806731","temp":39.59334229639961,"cpu":6.17748}
+2026/03/25 15:43:33 Respuesta: ok=true block=918627 reward=0.0011806731
+Bloque #918627 | 0.0011806731 BITCU
+Enviando bloque...
+2026/03/25 15:43:38 Respuesta raw: {"ok":true,"block":918636,"hash":"7465016cbe9674ba91ad3e1a9c45bfc01270e33c1d0bb1969b04724d9afcdfe5","reward":"0.0011277045","temp":39.15044062954323,"cpu":4.840455}
+2026/03/25 15:43:38 Respuesta: ok=true block=918636 reward=0.0011277045
+Bloque #918636 | 0.0011277045 BITCU
+2026/03/25 15:43:43 [NYQUIST] ERROR FATAL: Wallet en disco no coincide con wallet en memoria. Posible manipulación.
