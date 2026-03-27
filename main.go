@@ -1,19 +1,19 @@
 // ╔══════════════════════════════════════════════════════════════════════╗
-// ║        BITCOPPER® DAEMON — Proof of Heat Protocol                    ║
-// ║        Versión 2.0.0 — Protocolo Nyquist Integrado                  ║
+// ║        BITCOPPER® DAEMON — Proof of Heat Protocol™                  ║
+// ║        Versión 2.1.0 — Protocolo Nyquist + TAL3™                   ║
 // ║                                                                      ║
-// ║  © 2024-2026 Bitcopper Tech SpA — Todos los derechos reservados     ║
+// ║  © 2024-2026 Bitcopper Tech SpA® — Todos los derechos reservados   ║
 // ║  RUT: 78.355.848-3 | Chuquicamata, Calama, Región de Antofagasta   ║
-// ║  Bitcopper Technologies LLC — Wyoming, United States                 ║
-// ║  ID: 2026-001909118                                                  ║
+// ║  Bitcopper Technologies LLC® — Wyoming, United States               ║
+// ║  Wyoming ID: 2026-001909118                                          ║
 // ║                                                                      ║
-// ║  BITCOPPER® es marca registrada de Bitcopper Tech SpA.              ║
-// ║  BITCU® y CUPR® son marcas registradas de Bitcopper Tech SpA.       ║
+// ║  Marcas registradas de Bitcopper Tech SpA:                          ║
+// ║  BITCOPPER® · BITCU™ · CUPR™ · Proof of Heat™ · TAL3™             ║
 // ║                                                                      ║
-// ║  Software propietario. Prohibida su reproducción, distribución       ║
-// ║  o modificación sin autorización expresa de Bitcopper Tech SpA.     ║
+// ║  Software propietario. Prohibida su reproducción, distribución      ║
+// ║  o modificación sin autorización expresa de Bitcopper Tech SpA.    ║
 // ║                                                                      ║
-// ║  "In cuprum veritas" — Una placa. Una wallet. Una identidad.        ║
+// ║  "In cuprum veritas" — Una placa. Una wallet. Una identidad.       ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 
 package main
@@ -41,7 +41,7 @@ import (
 const (
 	RAILWAY_API   = "https://bitcu-server-production.up.railway.app"
 	RAILWAY_HOST  = "bitcu-server-production.up.railway.app"
-	VERSION       = "2.0.0"
+	VERSION = "2.1.0"
 	MINE_INTERVAL = 5 * time.Second
 )
 
@@ -256,8 +256,17 @@ func doHandshake(wallet, deviceID string) {
 // ── MAIN ──────────────────────────────────────────────────────────────────
 
 func main() {
-	fmt.Printf("BITCOPPER DAEMON v%s\n", VERSION)
-	fmt.Printf("Proof of Heat Protocol - In cuprum veritas.\n\n")
+	fmt.Println("")
+	fmt.Println(" ██████╗ ██╗████████╗ ██████╗ ██████╗ ██████╗ ██████╗ ███████╗██████╗ ")
+	fmt.Println(" ██╔══██╗██║╚══██╔══╝██╔════╝██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗")
+	fmt.Println(" ██████╔╝██║   ██║   ██║     ██║   ██║██████╔╝██████╔╝█████╗  ██████╔╝")
+	fmt.Println(" ██╔══██╗██║   ██║   ██║     ██║   ██║██╔═══╝ ██╔═══╝ ██╔══╝  ██╔══██╗")
+	fmt.Println(" ██████╔╝██║   ██║   ╚██████╗╚██████╔╝██║     ██║     ███████╗██║  ██║")
+	fmt.Println(" ╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝")
+	fmt.Println("")
+	fmt.Printf(" Proof of Heat Protocol™ v%s — In cuprum veritas\n", VERSION)
+	fmt.Println(" © 2024-2026 Bitcopper Tech SpA® — Todos los derechos reservados")
+	fmt.Println("")
 
 	httpClient = newHTTPClient()
 
